@@ -1,0 +1,44 @@
+ds('layout')
+
+@section('title', 'Listado de Aulas')
+
+@section('content')
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1>Listado de Aulas</h1>
+        <a href="{{ route('aulas.create') }}" class="btn btn-success">+ Nueva Aula</a>
+    </div>
+
+    @if ($aulas->count())
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Capacidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($aulas as $aula)
+                    <tr>
+                        <td>{{ $aula->id }}</td>
+                        <td>{{ $aula->nombre }}</td>
+                        <td>{{ $aula->capacidad }}</td>
+                        <td>
+                            <a href="{{ route('aulas.show', $aula) }}" class="btn btn-info btn-sm">Ver</a>
+                            <a href="{{ route('aulas.edit', $aula) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="{{ route('aulas.destroy', $aula) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger btn-sm" onclick="return confirm('¿Estás segura de eliminar esta aula?')">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p>No hay aulas registradas.</p>
+    @endif
+@endsection
+
