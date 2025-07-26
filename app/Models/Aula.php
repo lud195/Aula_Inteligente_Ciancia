@@ -39,4 +39,6 @@ class Aula extends Model
     {
         return $this->hasMany(Disponibilidad::class);
     }
+
 }
+

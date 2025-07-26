@@ -9,6 +9,7 @@ class AulaController extends Controller
 {
     public function index()
     {
+        // Cambié $aula por $aulas para que sea plural y coincida con compact('aulas')
         $aulas = Aula::paginate(20);
         return view('aulas.index', compact('aulas'));
     }
@@ -34,11 +35,9 @@ class AulaController extends Controller
 
     public function show($id)
     {
-        $aula = Aula::findOrFail($id); // Sin cargar focos
+        $aula = Aula::findOrFail($id); // Sin cargar relaciones adicionales
         return view('aulas.show', compact('aula'));
     }
- 
-
 
     public function edit($id)
     {

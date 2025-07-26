@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\AireAcondicionado;
-use App\Models\HistorialUsoAire;
 use Illuminate\Http\Request;
 
 class AireAcondicionadoController extends Controller
@@ -11,13 +10,41 @@ class AireAcondicionadoController extends Controller
     public function index()
     {
         $aires = AireAcondicionado::with('aula')->get();
-        return view('aire_acondicionado.index', compact('aires'));
+        return view('aireacondicionados.index', compact('aires'));
+    }
+
+    public function show(AireAcondicionado $aireacondicionado)
+    {
+        // Historial general, no asociado al aire
+        $historial = \App\Models\HistorialUsoAire::orderBy('fecha', 'desc')->get();
+
+        return view('aireacondicionados.show', compact('aireacondicionado', 'historial'));
+    }
+
+    public function edit(AireAcondicionado $aireacondicionado)
+    {
+        return view('aireacondicionados.edit', compact('aireacondicionado'));
+    }
+
+    public function update(Request $request, AireAcondicionado $aireacondicionado)
+    {
+        $data = $request->validate([
+            'marca' => 'required|string',
+            'modelo' => 'required|string',
+            'estado' => 'required|in:Encendido,Apagado,En mantenimiento',
+            'mantenimiento' => 'required|in:Al día,Pendiente,En proceso',
+        ]);
+
+        $aireacondicionado->update($data);
+
+        return redirect()->route('aireacondicionados.show', $aireacondicionado->id)
+                         ->with('success', 'Detalles actualizados correctamente');
     }
 
     public function create()
     {
-        $aulas = \App\Models\Aula::all(); // Trae todas las aulas
-        return view('aire_acondicionado.create', compact('aulas')); // Envía la variable a la vista
+        $aulas = \App\Models\Aula::all();
+        return view('aireacondicionados.create', compact('aulas'));
     }
 
     public function store(Request $request)
@@ -32,31 +59,12 @@ class AireAcondicionadoController extends Controller
 
         AireAcondicionado::create($data);
 
-        return redirect()->route('aireacondicionados.index')->with('success', 'Aire acondicionado creado correctamente');
+        return redirect()->route('aireacondicionados.index')->with('success', 'Aire acondicionado creado');
     }
 
-    public function show(AireAcondicionado $aire)
+    public function destroy(AireAcondicionado $aireacondicionado)
     {
-        $historial = $aire->historialUsos()->orderBy('fecha', 'desc')->get();
-        return view('aire_acondicionado.show', compact('aire', 'historial'));
-    }
-
-    public function edit(AireAcondicionado $aire)
-    {
-        return view('aire_acondicionado.edit', compact('aire'));
-    }
-
-    public function update(Request $request, AireAcondicionado $aire)
-    {
-        $data = $request->validate([
-            'marca' => 'required|string',
-            'modelo' => 'required|string',
-            'estado' => 'required|in:Encendido,Apagado,En mantenimiento',
-            'mantenimiento' => 'required|in:Al día,Pendiente,En proceso',
-        ]);
-
-        $aire->update($data);
-
-        return redirect()->route('aireacondicionados.show', $aire->id)->with('success', 'Aire acondicionado actualizado correctamente');
+        $aireacondicionado->delete();
+        return redirect()->route('aireacondicionados.index')->with('success', 'Aire eliminado');
     }
 }

@@ -20,5 +20,11 @@ class Reserva extends Model
     public function materia() {
         return $this->belongsTo(Materia::class);
     }
+    
+    public function horario()
+{
+    return $this->belongsTo(Horario::class);
+}
+
 }
 

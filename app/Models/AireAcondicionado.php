@@ -6,17 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class AireAcondicionado extends Model
 {
-    protected $guarded = [];
-
-    // Relación con aula
+    protected $fillable = ['aula_id', 'marca', 'modelo', 'estado', 'mantenimiento'];
     public function aula()
     {
         return $this->belongsTo(Aula::class);
-    }
-
-    // Relación con historial de uso
-    public function historialUsos()
-    {
-        return $this->hasMany(HistorialUsoAire::class);
     }
 }

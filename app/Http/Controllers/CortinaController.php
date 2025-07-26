@@ -3,39 +3,54 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cortina;
+use App\Models\Aula;
 use Illuminate\Http\Request;
 
 class CortinaController extends Controller
 {
     public function index() {
-        $cortinas = Cortina::all();
+        // Obtenemos todas las cortinas con su aula relacionada
+        $cortinas = Cortina::with('aula')->get();
+        // Enviamos la variable plural $cortinas a la vista
         return view('cortinas.index', compact('cortinas'));
     }
 
     public function create() {
-        return view('cortinas.create');
+        $aulas = Aula::all();
+        return view('cortinas.create', compact('aulas'));
     }
 
     public function store(Request $request) {
-        Cortina::create($request->all());
-        return redirect()->route('cortinas.index')->with('success', 'Cortina creado correctamente.');
+        $validated = $request->validate([
+            'estado' => 'required|string|max:255',
+            'aula_id' => 'required|exists:aulas,id',
+        ]);
+        Cortina::create($validated);
+        return redirect()->route('cortinas.index')->with('success', 'Cortina creada correctamente.');
     }
 
     public function show(Cortina $cortina) {
+        $cortina->load('aula');
         return view('cortinas.show', compact('cortina'));
     }
 
     public function edit(Cortina $cortina) {
-        return view('cortinas.edit', compact('cortina'));
+        $aulas = Aula::all();
+        return view('cortinas.edit', compact('cortina', 'aulas'));
     }
 
+    
     public function update(Request $request, Cortina $cortina) {
-        $cortina->update($request->all());
-        return redirect()->route('cortinas.index')->with('success', 'Cortina actualizado correctamente.');
+        $validated = $request->validate([
+            'estado' => 'required|string|max:255',
+            'aula_id' => 'required|exists:aulas,id',
+        ]);
+        $cortina->update($validated);
+        return redirect()->route('cortinas.index')->with('success', 'Cortina actualizada correctamente.');
     }
 
     public function destroy(Cortina $cortina) {
         $cortina->delete();
-        return redirect()->route('cortinas.index')->with('success', 'Cortina eliminado correctamente.');
+        return redirect()->route('cortinas.index')->with('success', 'Cortina eliminada correctamente.');
     }
 }

@@ -3,17 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Horario;
+use App\Models\Materia;
 use Illuminate\Http\Request;
 
 class HorarioController extends Controller
 {
     public function index() {
-        $horarios = Horario::all();
+        $horarios = Horario::with('materia', 'reserva.docente', 'reserva.aula')->get();
         return view('horarios.index', compact('horarios'));
     }
 
     public function create() {
-        return view('horarios.create');
+        $materias = Materia::all();
+        return view('horarios.create', compact('materias'));
     }
 
     public function store(Request $request) {
@@ -26,7 +28,8 @@ class HorarioController extends Controller
     }
 
     public function edit(Horario $horario) {
-        return view('horarios.edit', compact('horario'));
+        $materias = Materia::all();
+        return view('horarios.edit', compact('horario', 'materias'));
     }
 
     public function update(Request $request, Horario $horario) {
@@ -39,3 +42,4 @@ class HorarioController extends Controller
         return redirect()->route('horarios.index')->with('success', 'Horario eliminado correctamente.');
     }
 }
+

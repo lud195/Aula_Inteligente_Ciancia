@@ -6,27 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateMueblesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-public function up()
-{
-    Schema::create('muebles', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('aula_id')->constrained()->onDelete('cascade');
-        $table->string('tipo'); // silla, escritorio, etc.
-        $table->integer('cantidad')->default(1);
-        $table->timestamps();
-    });
-}
+    public function up()
+    {
+        Schema::create('muebles', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('aula_id')->constrained()->onDelete('cascade');
+            $table->string('tipo'); // proyector, silla, etc.
+            $table->integer('cantidad')->default(1);
+            $table->string('estado')->nullable();
+            $table->string('numero_inventario')->nullable();
+            $table->timestamps();
+        });
+    }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('muebles');

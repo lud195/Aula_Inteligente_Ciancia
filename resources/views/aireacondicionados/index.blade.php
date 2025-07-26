@@ -26,18 +26,17 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($aires as $aire)
+                @foreach($aires as $aireacondicionado)
                     <tr>
-                        <td>{{ $aire->id }}</td>
-                        <td>{{ $aire->aula_id }}</td>
-                        <td>{{ $aire->marca }}</td>
-                        <td>{{ $aire->modelo }}</td>
-                        <td>{{ $aire->estado }}</td>
-                        <td>{{ $aire->mantenimiento }}</td>
+                        <td>{{ $aireacondicionado->id }}</td>
+                        <td>{{ $aireacondicionado->aula_id }}</td>
+                        <td>{{ $aireacondicionado->marca }}</td>
+                        <td>{{ $aireacondicionado->modelo }}</td>
+                        <td>{{ $aireacondicionado->estado }}</td>
+                        <td>{{ $aireacondicionado->mantenimiento }}</td>
                         <td>
-                            <a href="{{ route('aireacondicionados.show', $aire->id) }}" class="btn btn-info btn-sm">Ver</a>
-                            <a href="{{ route('aireacondicionados.edit', $aire->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                            {{-- Opcional: botón para eliminar --}}
+                            <a href="{{ route('aireacondicionados.show', $aireacondicionado->id) }}" class="btn btn-info btn-sm">Ver</a>
+                            <a href="{{ route('aireacondicionados.edit', $aireacondicionado->id) }}" class="btn btn-warning btn-sm">Editar</a>
                         </td>
                     </tr>
                 @endforeach

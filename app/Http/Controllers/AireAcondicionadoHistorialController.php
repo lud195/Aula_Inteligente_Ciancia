@@ -1,17 +1,18 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\AireAcondicionado;
 use App\Models\HistorialUsoAire;
 use Illuminate\Http\Request;
 
 class AireAcondicionadoHistorialController extends Controller
 {
-    public function store(Request $request, $aireId)
+    public function create()
     {
-        $aire = AireAcondicionado::findOrFail($aireId);
+        return view('aireacondicionados.historial_create');
+    }
 
+    public function store(Request $request)
+    {
         $data = $request->validate([
             'fecha' => 'required|date',
             'hora_inicio' => 'required',
@@ -19,10 +20,8 @@ class AireAcondicionadoHistorialController extends Controller
             'temperatura' => 'nullable|string',
         ]);
 
-        $data['aire_acondicionado_id'] = $aire->id;
-
         HistorialUsoAire::create($data);
 
-        return redirect()->route('aire.show', $aire->id)->with('success', 'Registro de historial agregado correctamente');
+        return redirect()->back()->with('success', 'Historial agregado correctamente');
     }
 }

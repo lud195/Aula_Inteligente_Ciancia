@@ -17,6 +17,8 @@ use App\Http\Controllers\{
 use App\Models\Aula;
 use App\Http\Controllers\AireAcondicionadoHistorialController;
 
+
+
 // Ruta principal que muestra todas las aulas
 Route::get('/', function () {
     $aulas = Aula::all();
@@ -25,7 +27,6 @@ Route::get('/', function () {
 
 // Recursos estándar
 Route::resource('aulas', AulaController::class);
-Route::resource('aireacondicionados', AireAcondicionadoController::class);
 Route::resource('cortinas', CortinaController::class);
 Route::resource('disponibilidades', DisponibilidadController::class);
 Route::resource('docentes', DocentesController::class);
@@ -46,7 +47,7 @@ Route::get('/focos/{foco}/edit', [FocoController::class, 'edit'])->name('focos.e
 Route::put('/focos/{foco}', [FocoController::class, 'update'])->name('focos.update');
 Route::delete('/focos/{foco}', [FocoController::class, 'destroy'])->name('focos.destroy');
 
-// Rutas para historial con nombres diferentes y claros
-Route::get('aireacondicionados/{aireacondicionado}/historial/add', [AireAcondicionadoHistorialController::class, 'create'])->name('aireacondicionados.historial.create');
 
-Route::post('aireacondicionados/{aireacondicionado}/historial/add', [AireAcondicionadoHistorialController::class, 'store'])->name('aireacondicionados.historial.store');
+Route::resource('aireacondicionados', AireAcondicionadoController::class);
+
+Route::resource('historialaireacondicionado', AireAcondicionadoHistorialController::class);
