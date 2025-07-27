@@ -12,9 +12,9 @@ class CreateFocosTable extends Migration
             $table->foreignId('aula_id')->constrained()->onDelete('cascade');
             $table->string('codigo')->unique();
             $table->string('ubicacion');
-            $table->integer('intensidad'); // ejemplo: cantidad de lúmenes
-            $table->string('tipo'); // Ej: led, incandescente, fluorescente, etc.
-            $table->boolean('estado')->default(true); // encendido (true) o apagado (false)
+            $table->integer('intensidad'); // cantidad de lúmenes
+            $table->string('tipo');
+            $table->string('estado')->default(true); 
             $table->timestamps();
         });
     }

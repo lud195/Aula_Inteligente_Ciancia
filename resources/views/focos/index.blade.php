@@ -17,11 +17,10 @@
             <tr>
                 <th>ID</th>
                 <th>Código</th>
-                <th>Ubicación</th>
+                <th>Aula</th>
                 <th>Intensidad</th>
                 <th>Tipo</th>
                 <th>Estado</th>
-                <th>Aula</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -30,11 +29,10 @@
             <tr>
                 <td>{{ $foco->id }}</td>
                 <td>{{ $foco->codigo }}</td>
-                <td>{{ $foco->ubicacion }}</td>
+                <td>{{ $foco->aula->nombre ?? 'N/A' }}</td>
                 <td>{{ $foco->intensidad }}</td>
                 <td>{{ $foco->tipo }}</td>
                 <td>{{ $foco->estado ? 'Encendido' : 'Apagado' }}</td>
-                <td>{{ $foco->aula->nombre ?? 'N/A' }}</td>
                 <td>
                     <a href="{{ route('focos.show', ['aula' => $foco->aula_id, 'foco' => $foco->id]) }}" class="btn btn-info btn-sm">Ver</a>
                     <a href="{{ route('focos.edit', ['aula' => $foco->aula_id, 'foco' => $foco->id]) }}" class="btn btn-warning btn-sm">Editar</a>

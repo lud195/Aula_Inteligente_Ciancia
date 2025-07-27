@@ -16,14 +16,22 @@
 
     <form action="{{ route('focos.store') }}" method="POST">
         @csrf
+
         <div class="mb-3">
             <label for="codigo" class="form-label">Código del foco</label>
             <input type="text" name="codigo" id="codigo" class="form-control" required value="{{ old('codigo') }}">
         </div>
+
         <div class="mb-3">
             <label for="tipo" class="form-label">Tipo</label>
             <input type="text" name="tipo" id="tipo" class="form-control" required value="{{ old('tipo') }}">
         </div>
+
+        <div class="mb-3">
+            <label for="intensidad" class="form-label">Intensidad</label>
+            <input type="number" name="intensidad" id="intensidad" class="form-control" required min="0" max="100" value="{{ old('intensidad') }}">
+        </div>
+
         <div class="mb-3">
             <label for="estado" class="form-label">Estado</label>
             <select name="estado" id="estado" class="form-select" required>
@@ -31,8 +39,9 @@
                 <option value="apagado" {{ old('estado') == 'apagado' ? 'selected' : '' }}>Apagado</option>
             </select>
         </div>
+
         <div class="mb-3">
-            <label for="aula_id" class="form-label">Asignar Aula</label>
+            <label for="aula_id" class="form-label">Aula</label>
             <select name="aula_id" id="aula_id" class="form-select" required>
                 <option value="">-- Seleccione un aula --</option>
                 @foreach($aulas as $aula)

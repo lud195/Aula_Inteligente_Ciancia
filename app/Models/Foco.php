@@ -12,7 +12,9 @@ class Foco extends Model
         'codigo',
         'tipo',
         'estado',
-        'aula_id', // <-- importante
+        'aula_id',
+        'ubicacion',
+        'intensidad',
     ];
 
     public function aula()

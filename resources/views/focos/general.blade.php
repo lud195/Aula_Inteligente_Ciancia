@@ -35,12 +35,14 @@
                     <td>{{ $foco->estado ? 'Encendido' : 'Apagado' }}</td>
                     <td>{{ $foco->aula->nombre ?? 'N/A' }}</td>
                     <td>
-                        <a href="{{ route('focos.editGeneral', $foco->id) }}" class="btn btn-sm btn-primary">Editar</a>
-                        <form action="{{ route('focos.destroyGeneral', $foco->id) }}" method="POST" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button onclick="return confirm('¿Eliminar foco?')" class="btn btn-sm btn-danger">Eliminar</button>
-                        </form>
+                        <a href="{{ route('focos.edit', $foco->id) }}" class="btn btn-sm btn-primary">Editar</a>
+
+                        <form action="{{ route('focos.destroy', $foco->id) }}" method="POST" style="display:inline-block;">
+    @csrf
+    @method('DELETE')
+    <button onclick="return confirm('¿Eliminar foco?')" class="btn btn-sm btn-danger">Eliminar</button>
+</form>
+
                     </td>
                 </tr>
                 @endforeach

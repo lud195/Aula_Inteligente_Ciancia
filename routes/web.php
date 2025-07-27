@@ -12,12 +12,10 @@ use App\Http\Controllers\{
     MateriaController,
     MuebleController,
     AulaController,
-    ReservaController
+    ReservaController,
+    AireAcondicionadoHistorialController
 };
 use App\Models\Aula;
-use App\Http\Controllers\AireAcondicionadoHistorialController;
-
-
 
 // Ruta principal que muestra todas las aulas
 Route::get('/', function () {
@@ -25,7 +23,7 @@ Route::get('/', function () {
     return view('inicio', compact('aulas'));
 })->name('home');
 
-// Recursos estándar
+// Rutas recursos estándar
 Route::resource('aulas', AulaController::class);
 Route::resource('cortinas', CortinaController::class);
 Route::resource('disponibilidades', DisponibilidadController::class);
@@ -37,17 +35,22 @@ Route::resource('muebles', MuebleController::class);
 Route::resource('reservas', ReservaController::class);
 Route::resource('focos', FocoController::class);
 
-// Elimina esta línea duplicada porque ya existe con resource
-// Route::put('aireacondicionados', [AireAcondicionadoController::class, 'update'])->name('aireacondicionados.update');
-
-Route::get('/focos', [FocoController::class, 'index'])->name('focos.index');
-Route::get('/focos/create', [FocoController::class, 'create'])->name('focos.create');
-Route::post('/focos', [FocoController::class, 'store'])->name('focos.store');
-Route::get('/focos/{foco}/edit', [FocoController::class, 'edit'])->name('focos.edit');
-Route::put('/focos/{foco}', [FocoController::class, 'update'])->name('focos.update');
-Route::delete('/focos/{foco}', [FocoController::class, 'destroy'])->name('focos.destroy');
-
-
 Route::resource('aireacondicionados', AireAcondicionadoController::class);
 
 Route::resource('historialaireacondicionado', AireAcondicionadoHistorialController::class);
+
+// Rutas específicas para focos anidados dentro de aulas (ejemplo)
+// Puedes definir estas rutas para manejar focos dentro de aulas, si lo deseas.
+Route::prefix('aulas/{aula}')->group(function () {
+    Route::get('focos', [FocoController::class, 'indexPorAula'])->name('aulas.focos.index');
+    Route::get('focos/create', [FocoController::class, 'createPorAula'])->name('aulas.focos.create');
+    Route::post('focos', [FocoController::class, 'storePorAula'])->name('aulas.focos.store');
+    Route::get('focos/{foco}', [FocoController::class, 'showPorAula'])->name('aulas.focos.show');
+    Route::get('focos/{foco}/edit', [FocoController::class, 'editPorAula'])->name('aulas.focos.edit');
+    Route::put('focos/{foco}', [FocoController::class, 'updatePorAula'])->name('aulas.focos.update');
+    Route::delete('focos/{foco}', [FocoController::class, 'destroyPorAula'])->name('aulas.focos.destroy');
+});
+
+// Ruta para formulario general de creación de focos (opcional)
+Route::get('/focos/general/create', [FocoController::class, 'createGeneral'])->name('focos.createGeneral');
+Route::delete('/focos/{foco}', [FocoController::class, 'destroy'])->name('focos.destroy');

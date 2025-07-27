@@ -20,13 +20,17 @@ class FocoController extends Controller
     public function storePorAula(Request $request, Aula $aula) {
         $request->validate([
             'codigo' => 'required|string|max:100',
-            'ubicacion' => 'required|string',
             'intensidad' => 'required|integer|min:0|max:100',
             'tipo' => 'required|string',
-            'estado' => 'required|boolean'
+            'estado' => 'required|string|in:encendido,apagado'
         ]);
 
-        $aula->focos()->create(array_merge($request->all(), ['aula_id' => $aula->id]));
+        // Asignamos ubicacion automáticamente según el aula
+        $data = $request->all();
+        $data['ubicacion'] = $aula->ubicacion;
+        $data['aula_id'] = $aula->id;
+
+        $aula->focos()->create($data);
 
         return redirect()->route('aulas.focos.index', $aula)->with('success', 'Foco creado correctamente.');
     }
@@ -42,13 +46,16 @@ class FocoController extends Controller
     public function updatePorAula(Request $request, Aula $aula, Foco $foco) {
         $request->validate([
             'codigo' => 'required|string|max:100',
-            'ubicacion' => 'required|string',
             'intensidad' => 'required|integer|min:0|max:100',
             'tipo' => 'required|string',
-            'estado' => 'required|boolean'
+            'estado' => 'required|string|in:encendido,apagado'
         ]);
 
-        $foco->update($request->all());
+        $data = $request->all();
+        $data['ubicacion'] = $aula->ubicacion; // Actualizar ubicacion según aula
+        $data['aula_id'] = $aula->id;
+
+        $foco->update($data);
 
         return redirect()->route('aulas.focos.index', $aula)->with('success', 'Foco actualizado correctamente.');
     }
@@ -67,40 +74,60 @@ class FocoController extends Controller
 
     public function create() {
         $aulas = Aula::all();
-        return view('focos.create_general', compact('aulas'));
+        return view('focos.create', compact('aulas'));
+    }
+
+    public function createGeneral() {
+        $aulas = Aula::all();
+        return view('focos.create', compact('aulas'));
     }
 
     public function store(Request $request) {
         $request->validate([
             'codigo' => 'required|string|max:100|unique:focos,codigo',
-            'ubicacion' => 'required|string',
             'intensidad' => 'required|integer|min:0|max:100',
             'tipo' => 'required|string',
-            'estado' => 'required|boolean',
+            'estado' => 'required|string|in:encendido,apagado',
             'aula_id' => 'required|exists:aulas,id',
         ]);
 
-        Foco::create($request->all());
+        // Obtener aula para asignar ubicacion automáticamente
+        $aula = Aula::findOrFail($request->aula_id);
+
+        $data = $request->all();
+        $data['ubicacion'] = $aula->ubicacion;
+
+        Foco::create($data);
 
         return redirect()->route('focos.index')->with('success', 'Foco creado correctamente.');
     }
 
     public function edit(Foco $foco) {
         $aulas = Aula::all();
-        return view('focos.edit_general', compact('foco', 'aulas'));
+        return view('focos.edit', compact('foco', 'aulas'));
     }
 
-    public function update(Request $request, Foco $foco) {
+    
+    public function update(Request $request, Foco $foco)
+    {
         $request->validate([
-            'codigo' => 'required|string|max:100|unique:focos,codigo,' . $foco->id,
-            'ubicacion' => 'required|string',
+            'codigo' => 'required|string',
             'intensidad' => 'required|integer|min:0|max:100',
             'tipo' => 'required|string',
-            'estado' => 'required|boolean',
+            'estado' => 'required|in:apagado,encendido,en reparación,fuera de servicio',
             'aula_id' => 'required|exists:aulas,id',
         ]);
 
         $foco->update($request->all());
+
+
+        // Obtener aula para asignar ubicacion automáticamente
+        $aula = Aula::findOrFail($request->aula_id);
+
+        $data = $request->all();
+        $data['ubicacion'] = $aula->ubicacion;
+
+        $foco->update($data);
 
         return redirect()->route('focos.index')->with('success', 'Foco actualizado correctamente.');
     }
@@ -110,4 +137,6 @@ class FocoController extends Controller
 
         return redirect()->route('focos.index')->with('success', 'Foco eliminado correctamente.');
     }
+
+ 
 }
