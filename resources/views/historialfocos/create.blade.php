@@ -32,21 +32,26 @@
         </div>
 
         <div class="mb-3">
-            <label for="accion" class="form-label">Acción</label>
-            <select name="accion" id="accion" class="form-select" required>
-                <option value="encendido" {{ old('accion') == 'encendido' ? 'selected' : '' }}>Encendido</option>
-                <option value="apagado" {{ old('accion') == 'apagado' ? 'selected' : '' }}>Apagado</option>
-                <option value="mantenimiento" {{ old('accion') == 'mantenimiento' ? 'selected' : '' }}>Mantenimiento</option>
-            </select>
-        </div>
+    <label for="accion" class="form-label">Acción</label>
+    <select name="accion" id="accion" class="form-select" required>
+        <option value="reparado" {{ old('accion') == 'reparado' ? 'selected' : '' }}>Reparado</option>
+        <option value="cambiado" {{ old('accion') == 'cambiado' ? 'selected' : '' }}>Cambiado</option>
+        <option value="revisado" {{ old('accion') == 'revisado' ? 'selected' : '' }}>Revisado</option>
+        <option value="fuera de servicio" {{ old('accion') == 'fuera de servicio' ? 'selected' : '' }}>Fuera de servicio</option>
+    </select>
+</div>
 
-        <div class="mb-3">
-            <label for="estado" class="form-label">Estado</label>
-            <select name="estado" id="estado" class="form-select" required>
-                <option value="1" {{ old('estado') == 1 ? 'selected' : '' }}>Activo</option>
-                <option value="0" {{ old('estado') == 0 ? 'selected' : '' }}>Inactivo</option>
-            </select>
-        </div>
+
+<div class="mb-3">
+    <label for="estado" class="form-label">Estado</label>
+    <select name="estado" id="estado" class="form-select" required>
+        <option value="apagado" {{ old('estado') == 'apagado' ? 'selected' : '' }}>Apagado</option>
+        <option value="encendido" {{ old('estado') == 'encendido' ? 'selected' : '' }}>Encendido</option>
+        <option value="en reparación" {{ old('estado') == 'en reparación' ? 'selected' : '' }}>En reparación</option>
+        <option value="fuera de servicio" {{ old('estado') == 'fuera de servicio' ? 'selected' : '' }}>Fuera de servicio</option>
+    </select>
+</div>
+
 
         <button class="btn btn-success" type="submit">Guardar</button>
         <a href="{{ route('historialfocos.index') }}" class="btn btn-secondary">Cancelar</a>

@@ -34,19 +34,26 @@
                 <td>{{ $foco->tipo }}</td>
                 <td>{{ $foco->estado ? 'Encendido' : 'Apagado' }}</td>
                 <td>
-                    <a href="{{ route('focos.show', ['aula' => $foco->aula_id, 'foco' => $foco->id]) }}" class="btn btn-info btn-sm">Ver</a>
-                    <a href="{{ route('focos.edit', ['aula' => $foco->aula_id, 'foco' => $foco->id]) }}" class="btn btn-warning btn-sm">Editar</a>
-                    <form action="{{ route('focos.destroy', ['aula' => $foco->aula_id, 'foco' => $foco->id]) }}" method="POST" style="display:inline-block;">
-                        @csrf @method('DELETE')
+                    <!-- Botón Ver -->
+                    <a href="{{ route('focos.show', $foco->id) }}" class="btn btn-info btn-sm">Ver</a>
+
+                    <!-- Botón Editar -->
+                    <a href="{{ route('focos.edit', $foco->id) }}" class="btn btn-warning btn-sm">Editar</a>
+
+                    <!-- Botón Eliminar -->
+                    <form action="{{ route('focos.destroy', $foco->id) }}" method="POST" style="display:inline-block;">
+                        @csrf
+                        @method('DELETE')
                         <button class="btn btn-danger btn-sm" onclick="return confirm('¿Eliminar foco?')">Eliminar</button>
                     </form>
-                    <a href="{{ route('historialfocos.index', ['aula' => $foco->aula_id, 'foco' => $foco->id]) }}" class="btn btn-secondary btn-sm">Historial</a>
+
+                    <!-- Botón Historial -->
+                    <a href="{{ route('focos.historial.index', $foco->id) }}" class="btn btn-secondary btn-sm">Historial</a>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
 
-    <a href="{{ route('home') }}" class="btn btn-secondary mt-4">⬅️ Volver al inicio</a>
 </div>
 @endsection

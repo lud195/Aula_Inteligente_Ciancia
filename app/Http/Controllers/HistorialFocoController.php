@@ -1,65 +1,55 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\HistorialFoco;
 use App\Models\Foco;
+use App\Models\HistorialFoco;
 use Illuminate\Http\Request;
 
 class HistorialFocoController extends Controller
 {
     public function index(Foco $foco)
     {
-        $historialfocos = $foco->historialFocos()->get();
-        return view('historialfocos.index', compact('foco', 'historialfocos'));
+        $historiales = $foco->historiales()->orderByDesc('fecha_cambio')->get();
+        return view('focos.historial', compact('historiales', 'foco'));
     }
 
     public function create(Foco $foco)
     {
-        return view('historialfocos.create', compact('foco'));
+        return view('focos.crear_historial', compact('foco'));
     }
 
-    public function store(Request $request, Foco $foco)
-    {
-        $validated = $request->validate([
-            'fecha' => 'required|date',
-            'hora_inicio' => 'required',
-            'hora_fin' => 'nullable',
-            'estado' => 'required|string',
-        ]);
+    public function store(Request $request)
+{
+    $request->validate([
+        'foco_id' => 'required|exists:focos,id',
+        'fecha_cambio' => 'required|date',
+        'hora_inicio' => 'required',
+        'hora_fin' => 'required',
+        'accion' => 'required|in:revisado,cambiado,reparado,fuera de servicio',
+        'estado' => 'required|in:apagado,encendido,en reparación,fuera de servicio'
+    ]);
 
-        $foco->historialFocos()->create($validated);
+    HistorialFoco::create([
+        'foco_id' => $request->foco_id,
+        'fecha_cambio' => $request->fecha_cambio,
+        'hora_inicio' => $request->hora_inicio,
+        'hora_fin' => $request->hora_fin,
+        'accion' => $request->accion,
+        'estado' => $request->estado,
+    ]);
 
-        return redirect()->route('focos.historialfocos.index', $foco)->with('success', 'Historial creado correctamente.');
-    }
+    return redirect()->route('focos.historial.index', ['foco' => $request->foco_id])
 
-    public function show(Foco $foco, HistorialFoco $historialfoco)
-    {
-        return view('historialfocos.show', compact('foco', 'historialfoco'));
-    }
+        ->with('success', 'Historial creado correctamente.');
+}
+public function edit($id)
+{
+    $historialfoco = HistorialFoco::findOrFail($id);
+    // también pasa $focos si necesitas en el select
+    $focos = Foco::all();
+    return view('historialfocos.edit', compact('historialfoco', 'focos'));
+}
 
-    public function edit(Foco $foco, HistorialFoco $historialfoco)
-    {
-        return view('historialfocos.edit', compact('foco', 'historialfoco'));
-    }
 
-    public function update(Request $request, Foco $foco, HistorialFoco $historialfoco)
-    {
-        $validated = $request->validate([
-            'fecha' => 'required|date',
-            'hora_inicio' => 'required',
-            'hora_fin' => 'nullable',
-            'estado' => 'required|string',
-        ]);
-
-        $historialfoco->update($validated);
-
-        return redirect()->route('focos.historialfocos.index', $foco)->with('success', 'Historial actualizado correctamente.');
-    }
-
-    public function destroy(Foco $foco, HistorialFoco $historialfoco)
-    {
-        $historialfoco->delete();
-
-        return redirect()->route('focos.historialfocos.index', $foco)->with('success', 'Historial eliminado correctamente.');
-    }
 }

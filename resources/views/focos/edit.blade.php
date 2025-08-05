@@ -65,5 +65,45 @@
         <button type="submit" class="btn btn-primary">Actualizar</button>
         <a href="{{ route('focos.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
+    <hr>
+<h2>Agregar Historial del Foco</h2>
+
+<form action="{{ route('historial_focos.store') }}" method="POST">
+    @csrf
+    <input type="hidden" name="foco_id" value="{{ $foco->id }}">
+
+    <div class="mb-3">
+        <label for="fecha_cambio" class="form-label">Fecha de cambio:</label>
+        <input type="date" name="fecha_cambio" id="fecha_cambio" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="hora_inicio" class="form-label">Hora de inicio:</label>
+        <input type="time" name="hora_inicio" id="hora_inicio" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="hora_fin" class="form-label">Hora de fin (opcional):</label>
+        <input type="time" name="hora_fin" id="hora_fin" class="form-control">
+    </div>
+
+    <div class="mb-3">
+        <label for="accion" class="form-label">Acción:</label>
+        <input type="text" name="accion" id="accion" class="form-control" placeholder="Ej. Reparado, cambiado, revisado..." required>
+    </div>
+
+    <div class="mb-3">
+        <label for="estado" class="form-label">Estado:</label>
+        <select name="estado" id="estado" class="form-control" required>
+            <option value="encendido">Encendido</option>
+            <option value="apagado">Apagado</option>
+            <option value="en reparación">En reparación</option>
+            <option value="fuera de servicio">Fuera de servicio</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Agregar Historial</button>
+</form>
+
 </div>
 @endsection

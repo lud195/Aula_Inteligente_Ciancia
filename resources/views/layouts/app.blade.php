@@ -9,25 +9,17 @@
 </head>
 <body class="bg-light">
 
-    <!-- Navbar opcional -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">Inicio</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-        </div>
-    </nav>
 
     <main class="container py-4">
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @endif
 
-        <a href="{{ url()->previous() }}" class="btn btn-secondary mb-3">← Volver</a>
-
         @yield('content')
+        <div class="mt-4 text-center">
+    <a href="{{ route('home') }}" class="btn btn-primary">🏠 Volver al inicio</a>
+</div>
+
     </main>
 
     <!-- Bootstrap JS -->

@@ -4,9 +4,9 @@
 <div class="container">
     <h1>Editar Registro del Historial de Foco</h1>
 
-    <form action="{{ route('historialfocos.update', $historialfoco) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <form action="{{ route('historialfocos.store') }}" method="POST">
+    @csrf
+    @method('PUT')
 
         <div class="mb-3">
             <label for="foco_id" class="form-label">Foco</label>
@@ -44,5 +44,12 @@
         </div>
 
         <div class="mb-3">
-            <label for="estado" class="form-label">Estado</label>
-            <select name="estado" id="estado"
+    <label for="estado" class="form-label">Estado</label>
+    <select name="estado" id="estado" class="form-select" required>
+        <option value="1" {{ old('estado', $historialfoco->estado) == 1 ? 'selected' : '' }}>Activo</option>
+        <option value="0" {{ old('estado', $historialfoco->estado) == 0 ? 'selected' : '' }}>Inactivo</option>
+    </select>
+</div>
+
+<button class="btn btn-success" type="submit">Actualizar</button>
+<a href="{{ route('historialfocos.index') }}" class="btn btn-secondary">Cancelar</a>

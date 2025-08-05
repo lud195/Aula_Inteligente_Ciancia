@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Detalle del Foco ' . $foco->codigo)
+
 @section('content')
 <div class="container">
     <h1>Detalle del Foco</h1>
@@ -10,7 +12,7 @@
         <li class="list-group-item"><strong>Aula:</strong> {{ $foco->aula->nombre ?? 'N/A' }}</li>
         <li class="list-group-item"><strong>Intensidad:</strong> {{ $foco->intensidad }}</li>
         <li class="list-group-item"><strong>Tipo:</strong> {{ $foco->tipo }}</li>
-        <li class="list-group-item"><strong>Estado:</strong> {{ $foco->estado ? 'Encendido' : 'Apagado' }}</li>
+        <li class="list-group-item"><strong>Estado:</strong> {{ ucfirst($foco->estado) }}</li>
     </ul>
 
     <a href="{{ route('focos.edit', $foco) }}" class="btn btn-warning mt-3">Editar</a>

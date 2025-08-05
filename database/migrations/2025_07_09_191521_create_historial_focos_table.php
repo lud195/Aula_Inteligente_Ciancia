@@ -10,12 +10,14 @@ class CreateHistorialFocosTable extends Migration
         Schema::create('historial_focos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('foco_id')->constrained()->onDelete('cascade');
-            $table->date('fecha');
+            $table->date('fecha_cambio');
             $table->time('hora_inicio');
             $table->time('hora_fin')->nullable();
-            $table->string('estado'); // Ej: encendido, apagado, mantenimiento
+            $table->enum('accion', ['reparado', 'cambiado', 'revisado', 'fuera de servicio']);
+            $table->enum('estado', ['apagado', 'encendido', 'en reparación', 'fuera de servicio']);
             $table->timestamps();
         });
+        
     }
 
     public function down()
