@@ -1,18 +1,34 @@
 @extends('layouts.app')
 
-@section('title', 'Detalle Historial')
+@section('title', 'Detalle Registro de Historial')
 
 @section('content')
-<div class="container">
-    <h1>Detalle de historial</h1>
+<div class="container p-4 bg-white rounded shadow-sm">
+    <h1>Detalle Registro ID: {{ $historial->id }} - Aire ID: {{ $aireacondicionado->id }}</h1>
 
-    <ul class="list-group">
-        <li class="list-group-item"><strong>ID:</strong> {{ $historial->id }}</li>
-        <li class="list-group-item"><strong>Aula:</strong> {{ $historial->aireAcondicionado->aula_id ?? 'N/A' }}</li>
-        <li class="list-group-item"><strong>Fecha:</strong> {{ $historial->fecha_uso }}</li>
-        <li class="list-group-item"><strong>Acción:</strong> {{ $historial->accion }}</li>
-    </ul>
+    <a href="{{ route('historialaireacondicionado.index', $aireacondicionado->id) }}" class="btn btn-secondary mb-3">Volver al Historial</a>
 
-    <a href="{{ route('historial_aire.index') }}" class="btn btn-secondary mt-3">Volver al listado</a>
+    <table class="table table-bordered">
+        <tr>
+            <th>ID</th>
+            <td>{{ $historial->id }}</td>
+        </tr>
+        <tr>
+            <th>Fecha</th>
+            <td>{{ $historial->fecha }}</td>
+        </tr>
+        <tr>
+            <th>Hora Inicio</th>
+            <td>{{ $historial->hora_inicio }}</td>
+        </tr>
+        <tr>
+            <th>Hora Fin</th>
+            <td>{{ $historial->hora_fin ?? 'N/A' }}</td>
+        </tr>
+        <tr>
+            <th>Temperatura</th>
+            <td>{{ $historial->temperatura ?? 'N/A' }}</td>
+        </tr>
+    </table>
 </div>
 @endsection

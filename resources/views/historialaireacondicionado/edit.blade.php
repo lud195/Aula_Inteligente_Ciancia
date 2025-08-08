@@ -1,31 +1,48 @@
 @extends('layouts.app')
 
-@section('title', 'Editar Historial')
+@section('title', 'Editar Registro de Historial')
 
 @section('content')
-<div class="container">
-    <h1>Editar historial de uso</h1>
+<div class="container p-4 bg-white rounded shadow-sm">
+    <h1>Editar Registro ID: {{ $historial->id }} - Aire ID: {{ $aireacondicionado->id }}</h1>
 
-    <form action="{{ route('historial_aire.update', $historial->id) }}" method="POST">
-        @csrf @method('PUT')
+    <a href="{{ route('historialaireacondicionado.index', $aireacondicionado->id) }}" class="btn btn-secondary mb-3">Volver al Historial</a>
 
-    
+    @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+    @endif
+
+    <form action="{{ route('historialaireacondicionados.update', [$aireacondicionado->id, $historial->id]) }}" method="POST">
+        @csrf
+        @method('PUT')
 
         <div class="mb-3">
-            <label for="fecha_uso">Fecha y hora</label>
-            <input type="datetime-local" name="fecha_uso" class="form-control"
-                   value="{{ \Carbon\Carbon::parse($historial->fecha_uso)->format('Y-m-d\TH:i') }}" required>
+            <label for="fecha">Fecha:</label>
+            <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha', $historial->fecha) }}" required>
         </div>
 
         <div class="mb-3">
-            <label for="accion">Acción</label>
-            <select name="accion" class="form-control" required>
-                <option value="Encendido" {{ $historial->accion == 'Encendido' ? 'selected' : '' }}>Encendido</option>
-                <option value="Apagado" {{ $historial->accion == 'Apagado' ? 'selected' : '' }}>Apagado</option>
-            </select>
+            <label for="hora_inicio">Hora Inicio:</label>
+            <input type="time" name="hora_inicio" id="hora_inicio" class="form-control" value="{{ old('hora_inicio', $historial->hora_inicio) }}" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <div class="mb-3">
+            <label for="hora_fin">Hora Fin:</label>
+            <input type="time" name="hora_fin" id="hora_fin" class="form-control" value="{{ old('hora_fin', $historial->hora_fin) }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="temperatura">Temperatura:</label>
+            <input type="text" name="temperatura" id="temperatura" class="form-control" value="{{ old('temperatura', $historial->temperatura) }}" placeholder="Ej. 24°C">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Actualizar Registro</button>
     </form>
 </div>
 @endsection

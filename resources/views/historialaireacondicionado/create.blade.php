@@ -1,28 +1,47 @@
 @extends('layouts.app')
 
-@section('title', 'Registrar Uso de Aire')
+@section('title', 'Agregar Registro al Historial')
 
 @section('content')
-<div class="container">
-    <h1>Registrar uso de aire acondicionado</h1>
+<div class="container p-4 bg-white rounded shadow-sm">
+    <h1>Agregar Registro al Historial - Aire ID: {{ $aireacondicionado->id }}</h1>
 
-    <form action="{{ route('historial_aire.store') }}" method="POST">
+    <a href="{{ route('historialaireacondicionado.index', $aireacondicionado->id) }}" class="btn btn-secondary mb-3">Volver al Historial</a>
+
+    @if ($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+    @endif
+
+    <form action="{{ route('historialaireacondicionados.store', $aireacondicionado->id) }}" method="POST">
         @csrf
 
         <div class="mb-3">
-            <label for="fecha_uso">Fecha y hora de uso</label>
-            <input type="datetime-local" name="fecha_uso" class="form-control" required>
+            <label for="fecha">Fecha:</label>
+            <input type="date" name="fecha" id="fecha" class="form-control" value="{{ old('fecha') }}" required>
         </div>
 
         <div class="mb-3">
-            <label for="accion">Acción</label>
-            <select name="accion" class="form-control" required>
-                <option value="Encendido">Encendido</option>
-                <option value="Apagado">Apagado</option>
-            </select>
+            <label for="hora_inicio">Hora Inicio:</label>
+            <input type="time" name="hora_inicio" id="hora_inicio" class="form-control" value="{{ old('hora_inicio') }}" required>
         </div>
 
-        <button type="submit" class="btn btn-success">Guardar</button>
+        <div class="mb-3">
+            <label for="hora_fin">Hora Fin:</label>
+            <input type="time" name="hora_fin" id="hora_fin" class="form-control" value="{{ old('hora_fin') }}">
+        </div>
+
+        <div class="mb-3">
+            <label for="temperatura">Temperatura:</label>
+            <input type="text" name="temperatura" id="temperatura" class="form-control" value="{{ old('temperatura') }}" placeholder="Ej. 24°C">
+        </div>
+
+        <button type="submit" class="btn btn-success">Guardar Registro</button>
     </form>
 </div>
 @endsection

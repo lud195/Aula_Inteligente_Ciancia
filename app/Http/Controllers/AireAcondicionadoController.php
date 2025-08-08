@@ -12,14 +12,15 @@ class AireAcondicionadoController extends Controller
         $aires = AireAcondicionado::with('aula')->get();
         return view('aireacondicionados.index', compact('aires'));
     }
+    
 
     public function show(AireAcondicionado $aireacondicionado)
     {
-        // Historial general, no asociado al aire
         $historial = \App\Models\HistorialUsoAire::orderBy('fecha', 'desc')->get();
-
+    
         return view('aireacondicionados.show', compact('aireacondicionado', 'historial'));
     }
+    
 
     public function edit(AireAcondicionado $aireacondicionado)
     {
@@ -67,4 +68,11 @@ class AireAcondicionadoController extends Controller
         $aireacondicionado->delete();
         return redirect()->route('aireacondicionados.index')->with('success', 'Aire eliminado');
     }
+
+    public function createHistorial($id)
+{
+    $aire = AireAcondicionado::findOrFail($id);
+    return view('historialaireacondicionado.create', compact('aire'));
+}
+
 }

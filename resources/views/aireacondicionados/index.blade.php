@@ -35,9 +35,18 @@
                         <td>{{ $aireacondicionado->estado }}</td>
                         <td>{{ $aireacondicionado->mantenimiento }}</td>
                         <td>
-                            <a href="{{ route('aireacondicionados.show', $aireacondicionado->id) }}" class="btn btn-info btn-sm">Ver</a>
-                            <a href="{{ route('aireacondicionados.edit', $aireacondicionado->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                        </td>
+    <a href="{{ route('aireacondicionados.show', $aireacondicionado->id) }}" class="btn btn-info btn-sm">Ver</a>
+    <a href="{{ route('aireacondicionados.edit', $aireacondicionado->id) }}" class="btn btn-warning btn-sm">Editar</a>
+
+    <form action="{{ route('aireacondicionados.destroy', $aireacondicionado->id) }}" method="POST" style="display:inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este aire acondicionado?')">Eliminar</button>
+    </form>
+
+    <a href="{{ route('historialaireacondicionado.index', $aireacondicionado->id) }}" class="btn btn-info btn-sm">Historial</a>
+</td>
+
                     </tr>
                 @endforeach
             </tbody>

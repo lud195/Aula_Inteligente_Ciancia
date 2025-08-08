@@ -42,7 +42,7 @@
         </select>
 
         <button type="submit" class="btn btn-primary mt-3">Actualizar</button>
-        <a href="{{ route('aire.show', $aire->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
+        <a href="{{ route('aireacondicionados.show', $aireacondicionado->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
     </form>
 </div>
 @endsection
