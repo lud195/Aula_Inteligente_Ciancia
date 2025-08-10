@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -14,7 +15,11 @@ class Docentes extends Model
 
     public function disponibilidades()
     {
-        // Agregamos el nombre correcto de la clave foránea (docente_id)
         return $this->hasMany(Disponibilidad::class, 'docente_id');
+    }
+
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class, 'docente_id');
     }
 }

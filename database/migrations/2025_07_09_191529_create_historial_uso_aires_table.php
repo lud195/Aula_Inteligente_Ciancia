@@ -10,19 +10,25 @@ class CreateHistorialUsoAiresTable extends Migration
     {
         Schema::create('historial_uso_aires', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('aire_acondicionado_id'); // 👈 Agregada
+        
+            $table->unsignedBigInteger('aire_acondicionado_id');  // <-- Declara la columna primero
+        
+            $table->unsignedBigInteger('docente_id')->nullable();  // si es necesaria esta columna
+        
             $table->date('fecha');
             $table->time('hora_inicio');
             $table->time('hora_fin')->nullable();
             $table->string('temperatura')->nullable();
+        
             $table->timestamps();
-
-            // 👇 Agregamos la clave foránea
+        
+            // Definir clave foránea después
             $table->foreign('aire_acondicionado_id')
-                ->references('id')
-                ->on('aire_acondicionados')
-                ->onDelete('cascade');
+                  ->references('id')
+                  ->on('aire_acondicionados')
+                  ->onDelete('cascade');
         });
+        
     }
 
     public function down()

@@ -40,5 +40,10 @@ class Aula extends Model
         return $this->hasMany(Disponibilidad::class);
     }
 
+    public function horarios()
+    {
+        return $this->hasMany(Horario::class, 'aula_id');
+    }
+
 }
 

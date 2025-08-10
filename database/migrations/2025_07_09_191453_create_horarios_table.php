@@ -11,18 +11,24 @@ class CreateHorariosTable extends Migration
      *
      * @return void
      */
-    
-public function up()
-{
-    Schema::create('horarios', function (Blueprint $table) {
-        $table->id();
-        $table->foreignId('materia_id')->constrained()->onDelete('cascade');
-        $table->string('dia'); // lunes, martes, etc.
-        $table->time('hora_inicio');
-        $table->time('hora_fin');
-        $table->timestamps();
-    });
-}
+    public function up()
+    {
+        Schema::create('horarios', function (Blueprint $table) {
+            $table->id();
+            
+            // Claves foráneas
+            $table->foreignId('materia_id')->constrained()->onDelete('cascade');
+            $table->foreignId('docente_id')->constrained()->onDelete('cascade');
+            $table->foreignId('aula_id')->constrained()->onDelete('cascade');
+
+            // Información del horario
+            $table->string('dia'); // lunes, martes, etc.
+            $table->time('hora_inicio');
+            $table->time('hora_fin');
+
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.

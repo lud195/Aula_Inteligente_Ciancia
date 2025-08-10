@@ -33,8 +33,9 @@
                     <td>{{ ucfirst($horario->dia) }}</td>
                     <td>{{ $horario->hora_inicio }}</td>
                     <td>{{ $horario->hora_fin }}</td>
-                    <td>{{ $horario->reserva->docente->nombre ?? 'No asignado' }}</td>
-                    <td>{{ $horario->reserva->aula->nombre ?? 'No asignado' }}</td>
+                    <td>{{ $horario->docente->nombre ?? 'No asignado' }}</td>
+                    <td>{{ $horario->aula->nombre ?? 'No asignado' }}</td>
+ 
                     <td>
                         <a href="{{ route('horarios.edit', $horario) }}" class="btn btn-primary btn-sm">Editar</a>
                         <form action="{{ route('horarios.destroy', $horario) }}" method="POST" style="display:inline;">
