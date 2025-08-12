@@ -4,7 +4,6 @@ use App\Http\Controllers\AulaController;
 use App\Http\Controllers\FocoController;
 use App\Http\Controllers\HistorialFocoController;
 use App\Http\Controllers\CortinaController;
-use App\Http\Controllers\DisponibilidadController;
 use App\Http\Controllers\DocentesController;
 use App\Http\Controllers\HistorialUsuarioController;
 use App\Http\Controllers\HorarioController;
@@ -14,6 +13,7 @@ use App\Http\Controllers\ReservaController;
 use App\Http\Controllers\AireAcondicionadoController;
 use App\Http\Controllers\AireAcondicionadoHistorialController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DisponibilidadController;
 
 // Ruta principal
 Route::get('/', function () {
@@ -72,3 +72,10 @@ Route::prefix('aulas/{aula}')->group(function () {
     // Historial de un foco dentro de un aula
     Route::get('focos/{foco}/historial', [FocoController::class, 'historial'])->name('aulas.focos.historial.index');
 });
+
+Route::get('disponibilidades', [DisponibilidadController::class, 'index'])->name('disponibilidades.index');
+Route::post('disponibilidades', [DisponibilidadController::class, 'storeOrUpdate'])->name('disponibilidades.storeOrUpdate');
+Route::delete('disponibilidades/{disponibilidad}', [DisponibilidadController::class, 'destroy'])->name('disponibilidades.destroy');
+
+Route::delete('/disponibilidades/{id}', [DisponibilidadController::class, 'destroy'])->name('disponibilidades.destroy');
+

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Disponibilidad;
@@ -8,23 +9,37 @@ use Illuminate\Http\Request;
 
 class DisponibilidadController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Traer todas las disponibilidades con sus aulas y docentes relacionados
-        $disponibilidades = Disponibilidad::with('aula', 'docente')->get();
+        $query = Disponibilidad::with('aula', 'docente');
 
-        // Aulas que no tienen ninguna disponibilidad o que tienen disponibilidad con estado 'disponible'
+        if ($request->filled('estado')) {
+            $query->where('estado', $request->estado);
+        }
+
+        if ($request->filled('docente_id')) {
+            $query->where('docente_id', $request->docente_id);
+        }
+
+        $disponibilidades = $query->get();
+
         $aulasDisponibles = Aula::whereDoesntHave('disponibilidades')
-            ->orWhereHas('disponibilidades', function ($query) {
-                $query->where('estado', 'disponible');
+            ->orWhereHas('disponibilidades', function ($q) {
+                $q->where('estado', 'disponible');
             })->get();
 
-        // Docentes que tienen al menos una disponibilidad con estado 'disponible'
-        $docentesDisponibles = Docentes::whereHas('disponibilidades', function ($query) {
-            $query->where('estado', 'disponible');
+        $docentesDisponibles = Docentes::whereHas('disponibilidades', function ($q) {
+            $q->where('estado', 'disponible');
         })->get();
 
-        return view('disponibilidades.index', compact('disponibilidades', 'aulasDisponibles', 'docentesDisponibles'));
+        $docentes = Docentes::all();
+
+        return view('disponibilidades.index', compact(
+            'disponibilidades',
+            'aulasDisponibles',
+            'docentesDisponibles',
+            'docentes'
+        ));
     }
 
     public function create()
@@ -61,7 +76,7 @@ class DisponibilidadController extends Controller
         return view('disponibilidades.edit', compact('disponibilidad', 'aulas', 'docentes'));
     }
 
-    public function update(Request $request, Disponibilidad $disponibilidad)
+    public function storeOrUpdate(Request $request)
     {
         $request->validate([
             'aula_id' => 'required|exists:aulas,id',
@@ -70,15 +85,26 @@ class DisponibilidadController extends Controller
             'hora' => 'required',
             'fecha' => 'required|date',
         ]);
-
-        $disponibilidad->update($request->all());
-
-        return redirect()->route('disponibilidades.index')->with('success', 'Disponibilidad actualizada correctamente.');
+    
+        if ($request->filled('disponibilidad_id')) {
+            // Actualizar
+            $disponibilidad = Disponibilidad::findOrFail($request->disponibilidad_id);
+            $disponibilidad->update($request->all());
+            return redirect()->route('disponibilidades.index')->with('success', 'Disponibilidad actualizada correctamente.');
+        } else {
+            // Crear
+            Disponibilidad::create($request->all());
+            return redirect()->route('disponibilidades.index')->with('success', 'Disponibilidad creada correctamente.');
+        }
     }
+    
 
-    public function destroy(Disponibilidad $disponibilidad)
+    public function destroy($id)
     {
+        $disponibilidad = Disponibilidad::findOrFail($id);
         $disponibilidad->delete();
+    
         return redirect()->route('disponibilidades.index')->with('success', 'Disponibilidad eliminada correctamente.');
     }
+    
 }

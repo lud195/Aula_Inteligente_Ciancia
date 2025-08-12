@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,6 @@ class Disponibilidad extends Model
 
     public function docente()
     {
-        return $this->belongsTo(Docentes::class, 'docente_id');
+        return $this->belongsTo(Docentes::class);
     }
 }

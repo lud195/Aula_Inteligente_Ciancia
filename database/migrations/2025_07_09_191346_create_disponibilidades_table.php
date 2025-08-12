@@ -11,15 +11,13 @@ class CreateDisponibilidadesTable extends Migration
         Schema::create('disponibilidades', function (Blueprint $table) {
             $table->id();
             $table->foreignId('aula_id')->constrained()->onDelete('cascade');
-            $table->foreignId('docente_id')->constrained('docentes')->onDelete('cascade');  // <--- esta línea
+            $table->foreignId('docente_id')->constrained('docentes')->onDelete('cascade');
             $table->string('estado');
-            $table->string('hora');
+            $table->time('hora');
             $table->date('fecha');
             $table->timestamps();
         });
-        
     }
-    
 
     public function down()
     {
