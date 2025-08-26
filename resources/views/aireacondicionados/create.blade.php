@@ -51,7 +51,9 @@
             <option value="En proceso" {{ old('mantenimiento') == 'En proceso' ? 'selected' : '' }}>En proceso</option>
         </select>
 
-        <button type="submit" class="btn btn-success mt-3">Guardar</button>
+        <button class="btn btn-primary-action">
+    <i class="fa-solid fa-floppy-disk"></i> Guardar
+</button>
         <a href="{{ route('aireacondicionados.index') }}" class="btn btn-secondary mt-3">Cancelar</a>
     </form>
 </div>

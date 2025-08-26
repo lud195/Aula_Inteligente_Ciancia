@@ -4,7 +4,18 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1>Nuevo Horario</h1>
+    <h1 class="mb-4">Nuevo Horario</h1>
+
+    {{-- Mostrar errores --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>⚠️ {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
     <form action="{{ route('horarios.store') }}" method="POST">
         @csrf
@@ -31,16 +42,15 @@
             </select>
         </div>
 
-        {{-- HORA INICIO --}}
+        {{-- FRANJA HORARIA --}}
         <div class="mb-3">
-            <label for="hora_inicio" class="form-label">Hora de inicio</label>
-            <input type="time" name="hora_inicio" class="form-control" step="60" required>
-        </div>
-
-        {{-- HORA FIN --}}
-        <div class="mb-3">
-            <label for="hora_fin" class="form-label">Hora de fin</label>
-            <input type="time" name="hora_fin" class="form-control" step="60" required>
+            <label for="hora" class="form-label">Franja Horaria</label>
+            <select name="hora" class="form-select" required>
+                <option value="">Selecciona una franja</option>
+                @foreach($franjas as $franja)
+                    <option value="{{ $franja }}">{{ $franja }}</option>
+                @endforeach
+            </select>
         </div>
 
         {{-- DOCENTE --}}
@@ -65,6 +75,7 @@
             </select>
         </div>
 
+        {{-- Botones --}}
         <button type="submit" class="btn btn-primary">Guardar</button>
         <a href="{{ route('horarios.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>

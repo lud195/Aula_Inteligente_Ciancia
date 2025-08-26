@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container p-4 bg-white rounded shadow-sm">
-    <h1>Editar Aire Acondicionado ID: {{ $aireacondicionado->id }}</h1>
+    <h1>Editar Aire Acondicionado</h1>
 
     @if ($errors->any())
         <div class="alert alert-danger">

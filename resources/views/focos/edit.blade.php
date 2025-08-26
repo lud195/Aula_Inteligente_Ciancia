@@ -102,7 +102,9 @@
         </select>
     </div>
 
-    <button type="submit" class="btn btn-success">Agregar Historial</button>
+    <button type="submit" class="btn btn-primary-action">
+    <i class="fa-solid fa-plus"></i> Agregar Historial
+</button>
 </form>
 
 </div>

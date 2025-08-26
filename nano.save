@@ -5,7 +5,9 @@ ds('layout')
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h1>Listado de Aulas</h1>
-        <a href="{{ route('aulas.create') }}" class="btn btn-success">+ Nueva Aula</a>
+        <a href="{{ route('aulas.create') }}" class="btn btn-primary-action">
+    <i class="fa-solid fa-plus"></i> Nueva Aula
+</a>
     </div>
 
     @if ($aulas->count())

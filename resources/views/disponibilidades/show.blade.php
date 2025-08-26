@@ -1,3 +1,5 @@
+@extends('layouts.app')
+
 <h1>Disponibilidad - Show View</h1>
 
 <p><strong>Aula:</strong> {{ $disponibilidad->aula->nombre ?? 'Sin aula' }}</p>

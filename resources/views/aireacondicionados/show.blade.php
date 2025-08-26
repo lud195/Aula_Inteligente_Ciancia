@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container p-4 bg-white rounded shadow-sm">
-  <h1>Aire Acondicionado ID: {{ $aireacondicionado->id }} – Aula: {{ $aireacondicionado->aula->nombre ?? $aireacondicionado->aula_id }}</h1>
+  <h1>Aire Acondicionado  – Aula: {{ $aireacondicionado->aula->nombre ?? $aireacondicionado->aula_id }}</h1>
 
   @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>

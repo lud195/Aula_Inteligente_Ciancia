@@ -51,5 +51,7 @@
     </select>
 </div>
 
-<button class="btn btn-success" type="submit">Actualizar</button>
+<button class="btn btn-primary-action" type="submit">
+    <i class="fa-solid fa-pen-to-square"></i> Actualizar
+</button>
 <a href="{{ route('historialfocos.index') }}" class="btn btn-secondary">Cancelar</a>

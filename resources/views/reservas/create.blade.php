@@ -55,6 +55,8 @@
             <input type="text" name="tipo_origen" class="form-control" required>
         </div>
 
-        <button type="submit" class="btn btn-success">Guardar</button>
+        <button class="btn btn-primary-action">
+    <i class="fa-solid fa-floppy-disk"></i> Guardar
+</button>
     </form>
 @endsection

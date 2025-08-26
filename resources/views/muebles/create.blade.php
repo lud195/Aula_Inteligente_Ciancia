@@ -45,7 +45,9 @@
                 <input type="text" name="numero_inventario" class="form-control">
             </div>
 
-            <button type="submit" class="btn btn-success">Guardar</button>
+            <button class="btn btn-primary-action">
+    <i class="fa-solid fa-floppy-disk"></i> Guardar
+</button>
         </form>
     </div>
 </div>

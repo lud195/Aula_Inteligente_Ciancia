@@ -4,14 +4,22 @@
 
 @section('content')
 <div class="container mt-4">
-    <h1 class="mb-4 text-center">📅 Gestión de Disponibilidades</h1>
 
+    <!-- Título centrado -->
+    <h1 class="text-center mt-5 mb-4">
+        <i class="fa-solid fa-calendar-days" style="color: #FF8DA1;"></i> Gestión de Disponibilidades
+    </h1>
+
+    <!-- Mensaje de éxito -->
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <div class="mb-3 d-flex justify-content-between align-items-center">
-        <a href="{{ route('disponibilidades.create') }}" class="btn btn-primary">+ Nueva Disponibilidad</a>
+    <!-- Botón Nueva Disponibilidad alineado a la derecha -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ route('disponibilidades.create') }}" class="btn btn-primary-action">
+            <i class="fa-solid fa-plus"></i> Nueva Disponibilidad
+        </a>
     </div>
 
     {{-- Filtros --}}
@@ -45,7 +53,7 @@
             @if($aulasDisponibles->count())
                 <ul class="list-group">
                     @foreach($aulasDisponibles as $aula)
-                        <li class="list-group-item">{{ $aula->nombre }}</li>
+                        <li class="list-group-item">{{ $aula->nombre ?? '-' }}</li>
                     @endforeach
                 </ul>
             @else
@@ -57,7 +65,7 @@
             @if($docentesDisponibles->count())
                 <ul class="list-group">
                     @foreach($docentesDisponibles as $docente)
-                        <li class="list-group-item">{{ $docente->nombre }}</li>
+                        <li class="list-group-item">{{ $docente->nombre ?? '-' }}</li>
                     @endforeach
                 </ul>
             @else
@@ -67,50 +75,51 @@
     </div>
 
     <h4>Lista de disponibilidades asignadas</h4>
-    <table class="table table-striped table-bordered table-hover">
-        <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Aula</th>
-                <th>Docente</th>
-                <th>Estado</th>
-                <th>Hora</th>
-                <th>Fecha</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($disponibilidades as $disp)
-            <tr>
-                <td>{{ $disp->id }}</td>
-                <td>{{ $disp->aula->nombre ?? 'Sin asignar' }}</td>
-                <td>{{ $disp->docente->nombre ?? 'Sin docente' }}</td>
-                <td>
-                    @if($disp->estado == 'disponible')
-                        <span class="badge bg-success text-uppercase">{{ $disp->estado }}</span>
-                    @elseif($disp->estado == 'ocupado')
-                        <span class="badge bg-danger text-uppercase">{{ $disp->estado }}</span>
-                    @else
-                        <span class="badge bg-secondary text-uppercase">{{ $disp->estado }}</span>
-                    @endif
-                </td>
-                <td>{{ $disp->hora }}</td>
-                <td>{{ \Carbon\Carbon::parse($disp->fecha)->format('d/m/Y') }}</td>
-                <td>
-                    <a href="{{ route('disponibilidades.edit', $disp->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                    <form action="{{ route('disponibilidades.destroy', $disp->id) }}" method="POST" style="display:inline-block;">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-sm btn-danger" onclick="return confirm('¿Seguro que deseas eliminar esta disponibilidad?')">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="7" class="text-center">No hay disponibilidades registradas.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+    @if($disponibilidades->count())
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Aula</th>
+                    <th>Docente</th>
+                    <th>Estado</th>
+                    <th>Hora</th>
+                    <th>Fecha</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($disponibilidades as $disp)
+                <tr>
+                    <td>{{ $disp->id }}</td>
+                    <td>{{ optional($disp->aula)->nombre ?? '-' }}</td>
+                    <td>{{ optional($disp->docente)->nombre ?? '-' }}</td>
+                    <td>
+                        @if($disp->estado == 'disponible')
+                            <span class="badge bg-success text-uppercase">{{ $disp->estado }}</span>
+                        @elseif($disp->estado == 'ocupado')
+                            <span class="badge bg-danger text-uppercase">{{ $disp->estado }}</span>
+                        @else
+                            <span class="badge bg-secondary text-uppercase">{{ $disp->estado }}</span>
+                        @endif
+                    </td>
+                    <td>{{ $disp->hora ?? '-' }}</td>
+                    <td>{{ $disp->fecha ? \Carbon\Carbon::parse($disp->fecha)->format('d/m/Y') : '-' }}</td>
+                    <td>
+                        <a href="{{ route('disponibilidades.edit', $disp->id) }}" class="btn btn-primary btn-sm">Editar</a>
+                        <form action="{{ route('disponibilidades.destroy', $disp->id) }}" method="POST" class="d-inline" onsubmit="return confirm('¿Seguro que deseas eliminar esta disponibilidad?');">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @else
+        <p class="text-center">No hay disponibilidades registradas.</p>
+    @endif
+
 </div>
 @endsection

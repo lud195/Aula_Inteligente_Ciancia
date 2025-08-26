@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container mt-4">
-    <a href="{{ route('home') }}" class="btn btn-secondary mb-3">← Volver al inicio</a>
+    
 
     <h1>{{ $materia->nombre }}</h1>
 

@@ -4,15 +4,28 @@
 
 @section('content')
 <div class="container p-4 bg-white rounded shadow-sm">
-    <h1>Historial del Aire ID: {{ $aireacondicionado->id }}</h1>
 
-    <a href="{{ route('aireacondicionados.show', $aireacondicionado->id) }}" class="btn btn-secondary mb-3">Volver al detalle del Aire</a>
-    <a href="{{ route('historialaireacondicionados.create', $aireacondicionado->id) }}" class="btn btn-success mb-3">Agregar Registro al Historial</a>
+    <!-- Título centrado con margen superior e inferior -->
+    <h1 class="text-center mt-5 mb-4">
+        Historial del Aire ID: {{ $aireacondicionado->id }}
+    </h1>
 
+    <!-- Botones alineados a la derecha -->
+    <div class="d-flex justify-content-end mb-3 gap-2">
+        <a href="{{ route('aireacondicionados.show', $aireacondicionado->id) }}" class="btn btn-secondary">
+            ← Volver al detalle del Aire
+        </a>
+        <a href="{{ route('historialaireacondicionados.create', $aireacondicionado->id) }}" class="btn btn-primary-action">
+            <i class="fa-solid fa-file-circle-plus"></i> Agregar Registro al Historial
+        </a>
+    </div>
+
+    <!-- Mensaje de éxito -->
     @if(session('success'))
-      <div class="alert alert-success">{{ session('success') }}</div>
+        <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <!-- Tabla de historial -->
     @if($historial->count())
         <table class="table table-striped">
             <thead>
@@ -50,8 +63,7 @@
             </tbody>
         </table>
     @else
-        <p>No hay registros en el historial aún.</p>
+        <p class="text-center">No hay registros en el historial aún.</p>
     @endif
 </div>
 @endsection
-

@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container p-4 bg-white rounded shadow-sm">
-    <h1>Editar Registro ID: {{ $historial->id }} - Aire ID: {{ $aireacondicionado->id }}</h1>
+    <h1>Editar Registro </h1>
 
     <a href="{{ route('historialaireacondicionado.index', $aireacondicionado->id) }}" class="btn btn-secondary mb-3">Volver al Historial</a>
 

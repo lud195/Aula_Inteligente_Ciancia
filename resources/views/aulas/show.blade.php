@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="container mt-5">
-<a href="{{ route('home') }}" class="btn btn-secondary mb-3">← Volver al inicio</a>
 
     <h2>Detalles del Aula</h2>
 

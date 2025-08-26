@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="container p-4 bg-white rounded shadow-sm">
-    <h1>Agregar Registro al Historial - Aire ID: {{ $aireacondicionado->id }}</h1>
+    <h1>Agregar Registro al Historial - Aula: {{ $aireacondicionado->aula->nombre ?? $aireacondicionado->aula_id }}</h1>
 
     <a href="{{ route('historialaireacondicionado.index', $aireacondicionado->id) }}" class="btn btn-secondary mb-3">Volver al Historial</a>
 
@@ -41,7 +41,10 @@
             <input type="text" name="temperatura" id="temperatura" class="form-control" value="{{ old('temperatura') }}" placeholder="Ej. 24°C">
         </div>
 
-        <button type="submit" class="btn btn-success">Guardar Registro</button>
+
+        <button class="btn btn-primary-action">
+    <i class="fa-solid fa-floppy-disk"></i> Guardar Registro
+</button>
     </form>
 </div>
 @endsection

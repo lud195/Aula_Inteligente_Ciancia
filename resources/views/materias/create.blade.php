@@ -64,7 +64,9 @@
             </select>
         </div>
 
-        <button type="submit" class="btn btn-success">Guardar</button>
+        <button class="btn btn-primary-action">
+    <i class="fa-solid fa-floppy-disk"></i> Guardar
+</button>
         <a href="{{ route('materias.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>

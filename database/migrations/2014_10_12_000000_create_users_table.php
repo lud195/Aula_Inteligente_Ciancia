@@ -12,6 +12,10 @@ class CreateUsersTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('password');
+            $table->enum('role', ['alumno', 'docente', 'admin'])->default('alumno');
+            $table->string('foto')->nullable(); // campo para la foto de perfil
+            $table->rememberToken();
             $table->timestamps();
         });
     }

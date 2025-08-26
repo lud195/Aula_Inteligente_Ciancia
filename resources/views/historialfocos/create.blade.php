@@ -52,8 +52,9 @@
     </select>
 </div>
 
-
-        <button class="btn btn-success" type="submit">Guardar</button>
+<button class="btn btn-primary-action">
+    <i class="fa-solid fa-floppy-disk"></i> Guardar
+</button>
         <a href="{{ route('historialfocos.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>

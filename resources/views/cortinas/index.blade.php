@@ -3,42 +3,47 @@
 @section('title', 'Lista de Cortinas')
 
 @section('content')
-<h1>Lista de Cortinas</h1>
+    <!-- Título centrado con margen superior -->
+    <h1 class="text-center mb-4 mt-5">Lista de Cortinas</h1>
 
-@if(session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-@endif
+    <!-- Mensaje de éxito -->
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-<!-- Botón para crear nueva cortina, fuera del foreach -->
-<a href="{{ route('cortinas.create') }}" class="btn btn-primary mb-3">
-    Crear nueva cortina
-</a>
+    <!-- Botón para crear nueva cortina alineado a la derecha -->
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ route('cortinas.create') }}" class="btn btn-primary">
+            <i class="fa-solid fa-plus"></i> Crear nueva cortina
+        </a>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Aula</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($cortinas as $cortina)
+    <!-- Tabla de cortinas -->
+    <table class="table">
+        <thead>
             <tr>
-                <td>{{ $cortina->id }}</td>
-                <td>{{ $cortina->aula->nombre ?? 'Sin aula' }}</td>
-                <td>{{ $cortina->estado }}</td>
-                <td>
-                    <a href="{{ route('cortinas.edit', $cortina) }}" class="btn btn-sm btn-warning">Editar</a>
-                    <form action="{{ route('cortinas.destroy', $cortina) }}" method="POST" style="display:inline-block;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" onclick="return confirm('¿Estás seguro?')" class="btn btn-sm btn-danger">Eliminar</button>
-                    </form>
-                </td>
+                <th>ID</th>
+                <th>Aula</th>
+                <th>Estado</th>
+                <th>Acciones</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach($cortinas as $cortina)
+                <tr>
+                    <td>{{ $cortina->id }}</td>
+                    <td>{{ $cortina->aula->nombre ?? 'Sin aula' }}</td>
+                    <td>{{ $cortina->estado }}</td>
+                    <td>
+                        <a href="{{ route('cortinas.edit', $cortina) }}" class="btn btn-sm btn-warning">Editar</a>
+                        <form action="{{ route('cortinas.destroy', $cortina) }}" method="POST" style="display:inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" onclick="return confirm('¿Estás seguro?')" class="btn btn-sm btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 @endsection
