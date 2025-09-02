@@ -21,11 +21,12 @@
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" value="{{ old('nombre') }}" required>
         </div>
-
+        
         <div class="mb-3">
-            <label for="codigo" class="form-label">Código</label>
-            <input type="text" class="form-control" id="codigo" name="codigo" value="{{ old('codigo') }}" required>
-        </div>
+    <label for="codigo" class="form-label">Código</label>
+    <input type="text" class="form-control" id="codigo" name="codigo" value="{{ $codigo ?? '' }}" readonly>
+</div>
+
 
         <div class="mb-3">
             <label for="carrera" class="form-label">Carrera</label>

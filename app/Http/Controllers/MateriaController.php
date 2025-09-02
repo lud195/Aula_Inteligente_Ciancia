@@ -17,9 +17,19 @@ class MateriaController extends Controller
 
     public function create()
     {
+        // Obtener docentes ordenados
         $docentes = Docentes::orderBy('nombre')->get();
-        return view('materias.create', compact('docentes'));
+    
+        // Generar un código único (por ejemplo, MAT-001, MAT-002, etc.)
+        $ultimo = Materia::latest('id')->first();
+        $numero = $ultimo ? $ultimo->id + 1 : 1;
+        $codigo = 'MAT-' . str_pad($numero, 3, '0', STR_PAD_LEFT);
+    
+        // Pasar variables a la vista
+        return view('materias.create', compact('docentes', 'codigo'));
     }
+    
+
 
     public function store(Request $request)
     {

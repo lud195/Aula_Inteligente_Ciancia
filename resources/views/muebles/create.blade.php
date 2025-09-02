@@ -37,7 +37,13 @@
 
             <div class="mb-3">
                 <label for="estado" class="form-label">Estado</label>
-                <input type="text" name="estado" class="form-control">
+                <select name="estado" class="form-select" required>
+                    <option value="" disabled selected>Selecciona un estado</option>
+                    <option value="Bien">Bien</option>
+                    <option value="Roto">Roto</option>
+                    <option value="Nuevo">Nuevo</option>
+                    <option value="En reparación">En reparación</option>
+                </select>
             </div>
 
             <div class="mb-3">
@@ -46,8 +52,8 @@
             </div>
 
             <button class="btn btn-primary-action">
-    <i class="fa-solid fa-floppy-disk"></i> Guardar
-</button>
+                <i class="fa-solid fa-floppy-disk"></i> Guardar
+            </button>
         </form>
     </div>
 </div>

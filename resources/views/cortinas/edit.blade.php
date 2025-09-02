@@ -39,7 +39,16 @@
             <option value="bien" {{ old('estado', $cortina->estado) == 'bien' ? 'selected' : '' }}>Bien</option>
             <option value="nuevo" {{ old('estado', $cortina->estado) == 'nuevo' ? 'selected' : '' }}>Nuevo</option>
             <option value="en reparacion" {{ old('estado', $cortina->estado) == 'en reparacion' ? 'selected' : '' }}>En reparación</option>
-            <option value="no se" {{ old('estado', $cortina->estado) == 'no se' ? 'selected' : '' }}>No sé</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="nivel_cortina" class="form-label">Nivel de la cortina</label>
+        <select name="nivel_cortina" id="nivel_cortina" class="form-select" required>
+            <option value="" disabled>Selecciona un nivel</option>
+            <option value="baja" {{ old('nivel_cortina', $cortina->nivel_cortina) == 'baja' ? 'selected' : '' }}>Baja</option>
+            <option value="media" {{ old('nivel_cortina', $cortina->nivel_cortina) == 'media' ? 'selected' : '' }}>Media</option>
+            <option value="alta" {{ old('nivel_cortina', $cortina->nivel_cortina) == 'alta' ? 'selected' : '' }}>Alta</option>
         </select>
     </div>
 

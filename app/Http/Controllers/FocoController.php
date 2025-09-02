@@ -83,8 +83,15 @@ class FocoController extends Controller
     public function create()
     {
         $aulas = Aula::all();
-        return view('focos.create', compact('aulas'));
+    
+        // Generar un código único automáticamente (FOCO-001, FOCO-002, etc.)
+        $ultimo = Foco::latest('id')->first();
+        $numero = $ultimo ? $ultimo->id + 1 : 1;
+        $codigo = 'FOCO-' . str_pad($numero, 3, '0', STR_PAD_LEFT);
+    
+        return view('focos.create', compact('aulas', 'codigo'));
     }
+    
 
     public function createGeneral()
     {

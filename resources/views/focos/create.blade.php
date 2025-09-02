@@ -18,9 +18,10 @@
         @csrf
 
         <div class="mb-3">
-            <label for="codigo" class="form-label">Código del foco</label>
-            <input type="text" name="codigo" id="codigo" class="form-control" required value="{{ old('codigo') }}">
-        </div>
+    <label for="codigo" class="form-label">Código del foco</label>
+    <input type="text" name="codigo" id="codigo" class="form-control" readonly value="{{ $codigo }}">
+</div>
+
 
         <div class="mb-3">
             <label for="tipo" class="form-label">Tipo</label>

@@ -31,9 +31,15 @@ class ReservaController extends Controller
         return view('reservas.show', compact('reserva'));
     }
 
-    public function edit(Reserva $reserva) {
-        return view('reservas.edit', compact('reserva'));
+    public function edit(Reserva $reserva)
+    {
+        $aulas = Aula::all();
+        $docentes = Docentes::all();
+        $materias = Materia::all();
+    
+        return view('reservas.edit', compact('reserva', 'aulas', 'docentes', 'materias'));
     }
+    
 
     public function update(Request $request, Reserva $reserva) {
         $reserva->update($request->all());

@@ -8,10 +8,12 @@ class CreateCortinasTable extends Migration
 {
     public function up()
     {
+        
         Schema::create('cortinas', function (Blueprint $table) {
             $table->id();
             $table->string('estado');
-            $table->unsignedBigInteger('aula_id'); // si se relaciona con aulas
+            $table->enum('nivel_cortina', ['baja', 'media', 'alta']); // <-- aquí
+            $table->unsignedBigInteger('aula_id');
             $table->timestamps();
         });
     }
@@ -20,4 +22,5 @@ class CreateCortinasTable extends Migration
     {
         Schema::dropIfExists('cortinas');
     }
+    
 }

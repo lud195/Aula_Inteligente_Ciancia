@@ -28,9 +28,11 @@ class DisponibilidadController extends Controller
                 $q->where('estado', 'disponible');
             })->get();
 
-        $docentesDisponibles = Docentes::whereHas('disponibilidades', function ($q) {
-            $q->where('estado', 'disponible');
-        })->get();
+            $docentesDisponibles = Docentes::whereDoesntHave('disponibilidades')
+            ->orWhereHas('disponibilidades', function ($q) {
+                $q->where('estado', 'disponible');
+            })->get();
+        
 
         $docentes = Docentes::all();
 

@@ -25,6 +25,7 @@
                 <th>ID</th>
                 <th>Aula</th>
                 <th>Estado</th>
+                <th>Nivel de cortina</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -34,6 +35,7 @@
                     <td>{{ $cortina->id }}</td>
                     <td>{{ $cortina->aula->nombre ?? 'Sin aula' }}</td>
                     <td>{{ $cortina->estado }}</td>
+                    <td>{{ $cortina->nivel_cortina }}</td>
                     <td>
                         <a href="{{ route('cortinas.edit', $cortina) }}" class="btn btn-sm btn-warning">Editar</a>
                         <form action="{{ route('cortinas.destroy', $cortina) }}" method="POST" style="display:inline-block;">
